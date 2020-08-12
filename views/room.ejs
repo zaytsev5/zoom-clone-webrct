@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+
+   function generatorDiv(id,type){
+    //  setInterval(()=>{
+      const div = document.createElement('div')
+      div.className = 'noti'
+     type == 'join' ? div.innerHTML = `<span>${id}</span> has joined this conversation ` : div.innerHTML = `<span>${id}</span> has left this conversation `
+      setTimeout(()=>{
+        div.remove()
+      },3000)
+        document.querySelector('.message').append(div)
+    //  },2000)
+   }
+   
+  </script>
+  <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&display=swap" rel="stylesheet">
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="script.js" defer></script>
+  <title>ZOOM</title>
+  <style>
+    *{
+      font-family: 'Baloo Tamma 2', cursive;
+    }
+    span{
+      color:#3b5998;
+    }
+    .title{
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 19px;
+    }
+    select{
+      padding: 3px 5px;
+      font-size: 17px;
+      border-radius: 20px;
+    }
+    #video-grid {
+      
+      display: grid;
+      margin-top: 10px;
+      grid-template-columns: repeat(auto-fill, 300px);
+      grid-auto-rows: 300px;
+      grid-gap:10px;
+    }
+    
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotateY(180deg);
+      border-radius:5px;
+    }
+    #selfvideo{
+      width: 80%;
+      height: 60%;
+      margin-left: 20%;
+    }
+    .message{
+      position:absolute;
+      bottom: 20px;
+      right: 20px;
+     
+    }
+    .noti{
+      padding: 15px 10px;
+      border:1px solid #c3c6c9;
+      background-color:#f6f8fa;
+      border-radius: 4px;
+      margin-bottom: 5px;
+/* -moz-box-shadow: 1px -3px 9px -4px rgba(222,213,222,1);
+box-shadow: 1px -3px 9px -4px rgba(222,213,222,1); */
+    }
+    #peer{
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="title">Zoom chat with WebRCT</div>
+  <select id="filter" class="w-50  ml-2 mt-2 custom-select ">
+    <option value="none">Normal</option>
+    <option value="sepia(100%)">Old School</option>
+    <option value="blur(5px)">Hidden Mist</option>
+    <option value="grayscale(100%)">Brightness</option>
+</select>
+  <div id="video-grid"></div>
+  <div id="peer"></div>
+  <div class="message">
+    <!-- <div class="noti">
+      Nguyen Van Hai has joined this conversation!
+    </div>
+    <div class="noti">
+      Nguyen Van Hai has joined this conversation!
+    </div> -->
+  </div>
+  
+  
+</body>
+</html>
