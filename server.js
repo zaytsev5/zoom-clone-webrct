@@ -4,6 +4,8 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
 
+
+let PORT =  process.env.PORT || 5000
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
@@ -38,6 +40,6 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(3002,()=>{
+server.listen(PORT,()=>{
   console.log("Server started on port 3002");
 })
