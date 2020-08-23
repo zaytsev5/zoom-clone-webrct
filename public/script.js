@@ -9,6 +9,7 @@ const peers = {}
 let peerid = '';
 let callerIds  = [];
 let index = 0;
+let user_ips = []
 navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
@@ -33,6 +34,11 @@ navigator.mediaDevices.getUserMedia({
     console.log("me firts");
     call.answer(stream)
     const video = document.createElement('video')
+    video.addEventListener('click', () => {
+      console.log("You clicked mute");
+      video.volume == 1 ? video.volume = 0 : video.volume = 1;
+  
+    })
     video.className = callerIds[index++]
 
     call.on('stream', userVideoStream => {
@@ -47,20 +53,23 @@ navigator.mediaDevices.getUserMedia({
     peervideo.style.filter = decodedData
 })
 
-  socket.on('user-connected', userId => {
+  socket.on('user-connected', (userId) => {
+    // console.log(user_ip);
+    // if(user_ips.toString().includes(user_ip)) return alert('User exists in a group')
+    // user_ips.push(user_ip)
     console.log("hey");
     // let allowJoining = confirm(`Allow ${userId} joins this calling ? `)
     // if(allowJoining)
     connectToNewUser(userId, stream)
-    generatorDiv(userId,'join')
+    generatorDiv(userId,'join',isLight)
     // else socket.emit('NotAllowing',ROOM_ID)
   })
 })
 
 socket.on('user-disconnected', userId => {
   console.log("left");
+  generatorDiv(userId,'unjoined',isLight)
   document.querySelector(`.${userId}`).remove()
-  generatorDiv(userId)
   if (peers[userId]) peers[userId].close()
 })
 
@@ -88,7 +97,13 @@ myPeer.on('open', id => {
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
+
   video.className = userId
+  video.addEventListener('click', () => {
+    console.log("You clicked mute");
+    video.volume == 1 ? video.volume = 0 : video.volume = 1;
+
+  })
 
   socket.emit('SendCaller',peerid,ROOM_ID)
 
@@ -103,6 +118,7 @@ function connectToNewUser(userId, stream) {
 }
 
 function addVideoStream(video, stream) {
+  
   video.srcObject = stream
   video.addEventListener('loadedmetadata', () => {
     video.play()
