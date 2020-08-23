@@ -21,7 +21,7 @@ app.get('/:room', (req, res) => {
   // if(user_ips.includes(req.ip))
   //   return  res.redirect(`/${uuidV4()}`)
 
-  // console.log(req.ip);
+   console.log(req.ip);
   // user_ips.push(req.ip)
   res.render('room', { roomId: req.params.room })
 })

@@ -46,6 +46,7 @@ navigator.mediaDevices.getUserMedia({
     })
   })
 
+  
   myPeer.on('data', function (data) {
     console.log("hahaha");
     let decodedData = new TextDecoder('utf-8').decode(data)
@@ -54,6 +55,7 @@ navigator.mediaDevices.getUserMedia({
 })
 
   socket.on('user-connected', (userId) => {
+
     // console.log(user_ip);
     // if(user_ips.toString().includes(user_ip)) return alert('User exists in a group')
     // user_ips.push(user_ip)
